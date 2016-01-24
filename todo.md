@@ -1,0 +1,17 @@
+Here's a good old todo list of things to scope further or just do:
+  - promote the ansible setup to it's own repo following best practices
+    - set up ansible repo
+    - modify website repo
+    - install website based on cloning
+  - set up the website (flask) repo for itself and polish:
+    - versioned releases
+    - basic unit tests
+    - travis
+  - rockfall
+    - tests? travis?
+  - ansible:
+    - staging v. production
+    - use a community playbook
+  - promote provisioning guide to code
+  - fix nginx bug
+  - better monitoring

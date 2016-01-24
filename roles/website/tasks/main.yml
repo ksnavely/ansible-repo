@@ -1,0 +1,121 @@
+---
+  # System
+
+  - name: Update apt-cache
+    apt: update_cache=yes
+
+  - name: Install deps
+    apt: name={{ item }} update_cache=yes
+    with_items:
+      - build-essential
+      - curl
+      - lsof
+      - git
+      - vim
+      - libssl1.0.0
+      - libssl-dev
+      - tmux
+      - python-pip
+      - python-dev
+      - iotop
+      - nginx=1.4.6-1ubuntu3.3
+      - runit=2.1.1-6.2ubuntu3
+
+  - name: Setup symlinks for runit in general
+    file:
+      state=link
+      src=/etc/service
+      dest=/service
+
+  - name: Get virtualenv
+    pip: name=virtualenv
+
+  # Flask website
+
+  - name: website user
+    user: name=website
+
+  - name: clone website
+    git:
+      repo=https://github.com/ksnavely/website.git
+      dest=/srv/website
+
+  - name: Set website srv as website user
+    file:
+      state=directory
+      mode=0755
+      dest=/srv/website
+      owner=website
+      group=website
+
+  - pip:
+      virtualenv=/srv/website/venv
+      requirements=/srv/website/requirements.txt
+
+  - name: Setup website sv dir
+    file:
+      state=directory
+      dest=/etc/sv/website/supervise
+
+  - name: Setup website sv log dir
+    file:
+      state=directory
+      dest=/etc/sv/website/log/main
+
+  - name: Setup website runit service
+    copy:
+      src=sv-website-run
+      dest=/etc/sv/website/run
+      mode=0764
+
+  - name: Setup website runit log service
+    copy:
+      src=sv-website-log-run
+      dest=/etc/sv/website/log/run
+      mode=0764
+
+  - name: Setup symlinks for runit for the website
+    file:
+      state=link
+      src=/etc/sv/website
+      dest=/etc/service/website
+
+  # Nginx
+
+  - name: Push the nginx config
+    copy: src=nginx.conf dest=/etc/nginx/nginx.conf
+
+  - name: Setup nginx sv dir
+    file:
+      state=directory
+      dest=/etc/sv/nginx/supervise
+
+  - name: Setup nginx sv log dir
+    file:
+      state=directory
+      dest=/etc/sv/nginx/log/main
+
+  - name: Setup nginx runit service
+    copy:
+      src=sv-nginx-run
+      dest=/etc/sv/nginx/run
+      mode=0764
+
+  - name: Setup nginx runit log service
+    copy:
+      src=sv-nginx-log-run
+      dest=/etc/sv/nginx/log/run
+      mode=0764
+
+  - name: Setup symlinks for runit for nginx
+    file:
+      state=link
+      src=/etc/sv/nginx
+      dest=/etc/service/nginx
+
+  # Rockfall
+
+  - name: Install Rockfall
+    git:
+      repo=https://github.com/ksnavely/rockfall.git
+      dest=/srv/rockfall
