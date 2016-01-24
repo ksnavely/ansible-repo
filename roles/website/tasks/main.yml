@@ -52,6 +52,11 @@
       virtualenv=/srv/website/venv
       requirements=/srv/website/requirements.txt
 
+  - name: install the website into the venv too
+    shell: . venv/bin/activate && python setup.py install
+    args:
+      chdir: /srv/website
+
   - name: Setup website sv dir
     file:
       state=directory
