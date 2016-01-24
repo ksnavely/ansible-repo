@@ -14,23 +14,11 @@ E.g. AWS Ubuntu 14.04.
 ## Bootstrap the system for ansible and the site
 
 After fetching the box, these few steps should prepare the machine to run the web stack.
-One can see we'll run it right out of a repo clone.
-
-```
-ssh -i IDENTITY ubuntu@HOST
-sudo apt-get update
-sudo apt-get install -y ansible git python-dev
-git clone https://github.com/ksnavely/website.git
-sudo ln -s /home/ubuntu/website/website /srv/website/website
-```
-
+ - set up the host in either the production or the staging file
 
 ## Run playbook
 
-If you have the system set up, you can go ahead and start or update the machine's web service with:
+Once the ansible host file is configured we can run a playbook like so:
 ```
-cd ~/website
-git pull --rebase origin master
-cd ansible
-sudo ansible-playbook -v -c local -i hosts website.yml
+sudo ansible-playbook -v --user ubuntu --private-key /home/ksnavely/.ssh/website-aws.pem -i staging website.yml -v
 ```

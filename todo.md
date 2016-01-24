@@ -3,6 +3,8 @@ Here's a good old todo list of things to scope further or just do:
     - set up ansible repo
     - modify website repo
     - install website based on cloning
+      - website needs a setup.py
+      - still mutliple nginx's starting
   - set up the website (flask) repo for itself and polish:
     - versioned releases
     - basic unit tests

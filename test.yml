@@ -1,0 +1,14 @@
+---
+# file: test.yml
+# Defines the whole infrastructure for the website.
+- hosts: website
+  sudo: yes
+  vars:
+    - git_email: "ksnavely@gmail.com"
+  tasks:
+    # Rockfall
+
+    - name: Install Rockfall
+      git:
+        repo=https://github.com/ksnavely/rockfall.git
+        dest=/srv/rockfall
