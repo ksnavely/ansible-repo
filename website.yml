@@ -7,3 +7,4 @@
     - git_email: "ksnavely@gmail.com"
   roles: 
     - website
+    - nginx

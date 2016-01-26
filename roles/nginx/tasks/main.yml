@@ -1,0 +1,46 @@
+---
+  # Configure nginx
+  # - remove the default site
+  # - stop default running nginx
+  # - prevent init.d/nginx from starting on reboot
+  # - push our nginx config out
+  # - set up nginx under runit
+
+  - name: Check for the default nginx site (for removal)
+    stat: path=/etc/init.d/nginx
+    register: nginx_path
+
+  - name: Remove default nginx site if it exists
+    include: remove_default.yml
+    when: nginx_path.stat.exists
+
+  - name: Push the nginx config
+    copy: src=nginx.conf dest=/etc/nginx/nginx.conf
+
+  - name: Setup nginx sv dir
+    file:
+      state=directory
+      dest=/etc/sv/nginx/supervise
+
+  - name: Setup nginx sv log dir
+    file:
+      state=directory
+      dest=/etc/sv/nginx/log/main
+
+  - name: Setup nginx runit service
+    copy:
+      src=sv-nginx-run
+      dest=/etc/sv/nginx/run
+      mode=0764
+
+  - name: Setup nginx runit log service
+    copy:
+      src=sv-nginx-log-run
+      dest=/etc/sv/nginx/log/run
+      mode=0764
+
+  - name: Setup symlinks for runit for nginx
+    file:
+      state=link
+      src=/etc/sv/nginx
+      dest=/etc/service/nginx
