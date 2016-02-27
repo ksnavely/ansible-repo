@@ -16,6 +16,8 @@ Here's a good old todo list of things to scope further or just do:
   - use a community playbook
   - refactor existing website tasks into a few roles
   - dynamic inventory
+  - TLS
+    - working live, but need to render the certs via ansible
 
 # Security
   - risk assesment
