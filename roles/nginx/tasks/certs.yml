@@ -1,0 +1,12 @@
+---
+  - name: Render the CA cert
+    copy:
+      content="{{kdevops_crt}}"
+      dest=/etc/nginx/conf/1_kdevops.com_bundle.crt
+    no_log: true
+
+  - name: Render the CA cert key
+    copy:
+      content="{{kdevops_key}}"
+      dest=/etc/nginx/conf/kdevops_com.key
+    no_log: true
