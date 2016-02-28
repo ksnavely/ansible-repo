@@ -6,7 +6,11 @@ This repo holds an systems stack for my own web services. I try to follow ansibl
 
 ### website
 
-This playbook stands up my person website stack. There are a few components:
+This playbook stands up my person website stack. There are a few component roles:
+
+#### flask-website
    - The [website](https://github.com/ksnavely/website) repo controls the front page of the site.
    - The [rockfall](https://github.com/ksnavely/rockfall) repo hold a fun HTML5/JS game -- can you make it to level 5?
-   - The nginx role stands up a proxy server in front of the overall website's components
+
+#### nginx
+   - The nginx role stands up a proxy server in front of the overall website's components.

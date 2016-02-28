@@ -20,5 +20,5 @@ After fetching the box, these few steps should prepare the machine to run the we
 
 Once the ansible host file is configured we can run a playbook like so:
 ```
-sudo ansible-playbook -v --user ubuntu --private-key /home/ksnavely/.ssh/website-aws.pem -i staging website.yml -v
+sudo ansible-playbook -v --user ubuntu --private-key PATH_TO_KEY -i staging website.yml -v --vault-password-file=PATH_TO_VAULT_PASS_FILE
 ```
