@@ -11,18 +11,17 @@ Here's a good old todo list of things to scope further or just do:
 # Nginx
   - fix autostart on provision
   - recovers from being down?
+  - stop is broken?
 
 # Ansible
   - use a community playbook
-  - refactor existing website tasks into a few roles
   - dynamic inventory
   - TLS
-    - working live, but need to render the certs via ansible
+    - automated cert renewal
 
 # Security
   - risk assesment
   - secure configuration
-  - https
 
 # Monitoring
   - Monitor box up
