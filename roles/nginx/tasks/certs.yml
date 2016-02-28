@@ -1,4 +1,15 @@
 ---
+  - include_vars: certs.yml
+    no_log: true
+
+  - name: Create nginx conf dir
+    file:
+      state=directory
+      mode=0755
+      dest=/etc/nginx/conf
+      owner=root
+      group=root
+
   - name: Render the CA cert
     copy:
       content="{{kdevops_crt}}"
