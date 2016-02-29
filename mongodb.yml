@@ -1,0 +1,7 @@
+---
+# file: mongodb.yml
+# Controls mongo hosts
+- hosts: mongodb
+  sudo: yes
+  roles: 
+    - mongodb
