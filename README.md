@@ -14,3 +14,7 @@ This playbook stands up my person website stack. There are a few component roles
 
 #### nginx
    - The nginx role stands up a proxy server in front of the overall website's components.
+   - Included is a certs task for setting up the TLS certificate
+
+#### mongodb
+   - This role stands up a single mongo instance.
