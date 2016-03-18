@@ -4,6 +4,9 @@ Here's a good old todo list of things to scope further or just do:
   - unit tests
   - CI
   - version pin
+  - service doesn't restart after an upgrade?
+  - sort blog posts with the latest on top
+  - blog post entry system
 
 # Rockfall
   - feature work
