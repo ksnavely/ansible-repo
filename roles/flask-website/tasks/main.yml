@@ -1,4 +1,5 @@
 ---
+  - include_vars: production.yml
   # System
 
   - name: Update apt-cache
@@ -56,6 +57,12 @@
     shell: . venv/bin/activate && python setup.py install
     args:
       chdir: /srv/website
+
+  - name: render the website config
+    copy:
+      content: "{{ production_conf }}"
+      dest: /etc/website.conf
+    no_log: true
 
   - name: Setup website sv dir
     file:

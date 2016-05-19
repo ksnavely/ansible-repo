@@ -5,8 +5,6 @@ Here's a good old todo list of things to scope further or just do:
   - CI
   - version pin
   - service doesn't restart after an upgrade?
-  - sort blog posts with the latest on top
-  - blog post entry system
 
 # Rockfall
   - feature work
@@ -21,15 +19,11 @@ Here's a good old todo list of things to scope further or just do:
   - dynamic inventory
   - TLS
     - automated cert renewal
+  - ugh make sure to use yml style copy statements to avoid newline issues in rendered vault files
 
 # Security
   - risk assesment
   - secure configuration
-
-# Monitoring
-  - Monitor box up
-  - Monitor site up
-  - Page
 
 # Docs
   - usage guide
