@@ -22,6 +22,9 @@ Here's a good old todo list of things to scope further or just do:
   - ugh make sure to use yml style copy statements to avoid newline issues in rendered vault files
   - split system tasks out
 
+# Teckel
+  - sv start isn't working right -- looks like 'teckel' needs to own some of the cloned dirs for make run to work
+
 # Security
   - risk assesment
   - secure configuration

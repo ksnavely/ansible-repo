@@ -4,11 +4,6 @@
   - name: teckel user
     user: name=teckel
 
-  - name: clone teckel
-    git:
-      repo=https://github.com/ksnavely/teckel.git
-      dest=/srv/teckel
-
   - name: Set teckel srv as teckel user
     file:
       state=directory
@@ -16,6 +11,11 @@
       dest=/srv/teckel
       owner=teckel
       group=teckel
+
+  - name: clone teckel
+    git:
+      repo=https://github.com/ksnavely/teckel.git
+      dest=/srv/teckel
 
   - name: build teckel
     shell: make
