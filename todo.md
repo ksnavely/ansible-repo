@@ -20,6 +20,7 @@ Here's a good old todo list of things to scope further or just do:
   - TLS
     - automated cert renewal
   - ugh make sure to use yml style copy statements to avoid newline issues in rendered vault files
+  - split system tasks out
 
 # Security
   - risk assesment

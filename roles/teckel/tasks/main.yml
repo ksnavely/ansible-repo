@@ -1,0 +1,51 @@
+---
+  # Erlang teckel app
+
+  - name: teckel user
+    user: name=teckel
+
+  - name: clone teckel
+    git:
+      repo=https://github.com/ksnavely/teckel.git
+      dest=/srv/teckel
+
+  - name: Set teckel srv as teckel user
+    file:
+      state=directory
+      mode=0755
+      dest=/srv/teckel
+      owner=teckel
+      group=teckel
+
+  - name: build teckel
+    shell: make
+    args:
+      chdir: /srv/teckel
+
+  - name: Setup teckel sv dir
+    file:
+      state=directory
+      dest=/etc/sv/teckel/supervise
+
+  - name: Setup teckel sv log dir
+    file:
+      state=directory
+      dest=/etc/sv/teckel/log/main
+
+  - name: Setup teckel runit service
+    copy:
+      src=sv-teckel-run
+      dest=/etc/sv/teckel/run
+      mode=0764
+
+  - name: Setup teckel runit log service
+    copy:
+      src=sv-teckel-log-run
+      dest=/etc/sv/teckel/log/run
+      mode=0764
+
+  - name: Setup symlinks for runit for the teckel
+    file:
+      state=link
+      src=/etc/sv/teckel
+      dest=/etc/service/teckel
