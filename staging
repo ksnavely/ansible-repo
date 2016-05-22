@@ -3,3 +3,6 @@ ec2-52-25-122-94.us-west-2.compute.amazonaws.com
 
 [mongodb]
 ec2-52-25-122-94.us-west-2.compute.amazonaws.com
+
+[erlang]
+ec2-52-25-122-94.us-west-2.compute.amazonaws.com

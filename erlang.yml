@@ -1,0 +1,7 @@
+---
+# file erlang.yml
+# Defines the erlang setup
+- hosts: erlang
+  sudo: yes
+  roles:
+     - role: erlang

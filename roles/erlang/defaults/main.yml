@@ -1,0 +1,12 @@
+---
+erlang_repo: "https://packages.erlang-solutions.com/"
+erlang_repo_key_url: "https://packages.erlang-solutions.com/{{ ansible_distribution | lower }}/erlang_solutions.asc"
+erlang_repo_components: "contrib"
+
+erlang_packages_state: present
+erlang_additional_packages:
+  - erlang-manpages
+
+erlang_pin: true
+erlang_pin_origin: "{{ erlang_repo | regex_replace('^[a-zA-Z]+://(.*)?/$', '\\\\1') }}"
+
