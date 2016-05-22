@@ -1,6 +1,6 @@
 ---
 # file: teckel.yml
-# Defines the whole infrastructure for the website.
+# Installs teckel
 - hosts: teckel
   sudo: yes
   roles: 

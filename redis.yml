@@ -1,0 +1,9 @@
+---
+# file: redis.yml
+# Installs redis
+- hosts: redis
+  sudo: yes
+  vars:
+    - redis_bind: 127.0.0.1
+  roles:
+    - redis
