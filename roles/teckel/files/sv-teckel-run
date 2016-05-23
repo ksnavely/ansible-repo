@@ -1,3 +1,4 @@
 #!/bin/bash
-cd /srv/teckel
-exec make run
+export HOME=/root
+exec 2>&1
+exec /srv/teckel/_rel/teckel_release/bin/teckel_release foreground

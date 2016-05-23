@@ -6,8 +6,8 @@
 
   - name: clone teckel
     git:
-      repo=https://github.com/ksnavely/teckel.git
-      dest=/srv/teckel
+      repo: https://github.com/ksnavely/teckel.git
+      dest: /srv/teckel
 
   - name: Set teckel srv as teckel user
     file:
