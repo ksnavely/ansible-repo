@@ -9,4 +9,5 @@ before_install:
 install:
   - pip install ansible==1.7.2
 
-script: echo 'Done!'
+script:
+  - ansible-playbook --become --connection local website.yml -v
