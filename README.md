@@ -18,3 +18,6 @@ This playbook stands up my person website stack. There are a few component roles
 
 #### mongodb
    - This role stands up a single mongo instance.
+
+#### letsencrypt
+   - This role performs the ACME cert challenge against the letsencrypt service for self-serve TLS cert issuance.

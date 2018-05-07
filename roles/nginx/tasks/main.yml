@@ -44,5 +44,3 @@
       state=link
       src=/etc/sv/nginx
       dest=/etc/service/nginx
-
-  - include: certs.yml

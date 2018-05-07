@@ -1,0 +1,9 @@
+---
+# file: letsencrypt.yml
+# This includes assets for LE cert challenges
+- hosts: website
+  sudo: yes
+  vars:
+    - git_email: "ksnavely@gmail.com"
+  roles: 
+    - letsencrypt
