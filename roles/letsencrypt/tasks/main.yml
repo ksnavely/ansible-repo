@@ -1,0 +1,98 @@
+---
+### Setup task variables
+
+  - set_fact:
+      certificate: "kdevops.com"
+      cert_storage_dir: "/etc/pki/collab/private"
+      acct_key_path: "/var/tmp/letsencrypt_account.key"
+      acct_email: "kjsnavely@gmail.com"
+      acme_directory: "https://acme-v01.api.letsencrypt.org/directory"
+
+  - set_fact:
+      cert_key_path: "/etc/pki/collab/private/{{ certificate }}.key"
+      cert_path: "/etc/pki/collab/private/{{ certificate }}.crt"
+      fullchain_cert_path: "/etc/pki/collab/private/{{ certificate }}.fullchain.crt"
+      intermediate_cert_path: "/etc/pki/collab/private/{{ certificate }}.intermediate.crt"
+      csr_path: "/var/tmp/{{ certificate }}.csr"
+
+### Setup certbot
+
+  - name: Install software-properties-common
+    apt: name={{ item }} update_cache=yes
+    with_items:
+      - software-properties-common
+
+  - name: Add Certbot apt repository
+    apt_repository:
+      repo: ppa:certbot/certbot
+
+  - name: Install Certbot
+    apt: name={{ item }} update_cache=yes
+    with_items:
+      - python-certbot-nginx
+
+### Prepare account, cert key; csr
+
+  - name: Create account key
+    command: "openssl genrsa -out {{ acct_key_path }} 4096"
+    args:
+      creates: "{{ acct_key_path }}"
+  
+  - name: Create certificate storage directory
+    file:
+      dest: "{{ cert_storage_dir }}"
+      owner: root
+      group: root
+      mode: 0750
+      state: directory
+  
+  - name: Create certificate key
+    command: "openssl genrsa -out {{ cert_key_path }} 4096"
+    args:
+      creates: "{{ cert_key_path }}"
+    register: result
+  
+  - name: Generate CSR
+    command: "openssl req -new -sha256 -key {{ cert_key_path }} -out {{ csr_path }} -subj /CN={{ certificate }}"
+    when: result is changed
+
+  - name: Update apt-cache
+    apt: update_cache=yes
+
+  - name: Create a challenge for kdevops.com using a account key file.
+    letsencrypt:
+      account_email: "{{ acct_email }}"
+      account_key_src: "{{ acct_key_path }}"
+      acme_directory: "{{ acme_directory }}"
+      csr: "{{ csr_path }}"
+      dest: "{{ cert_path }}"
+      fullchain_dest: "{{ fullchain_cert_path }}"
+      remaining_days: 90
+    register: kdevops_com_challenge
+
+  - name: Create a dir to serve the challenge from
+    file:
+      state: directory
+      mode: 0755
+      dest: /srv/letsencrypt/.well-known/acme-challenge
+      owner: website
+      group: website
+      recurse: yes
+
+  - name: perform the necessary steps to fulfill the challenge
+    copy:
+      dest: "/srv/letsencrypt/{{ kdevops_com_challenge['challenge_data']['kdevops.com']['http-01']['resource'] }}"
+      content: "{{ kdevops_com_challenge['challenge_data']['kdevops.com']['http-01']['resource_value'] }}"
+    when: kdevops_com_challenge is changed
+
+  - name: Let the challenge be validated and retrieve the cert and intermediate certificate
+    letsencrypt:
+      account_email: "{{ acct_email}} "
+      account_key_src: "{{ acct_key_path }}"
+      acme_directory: "{{ acme_directory }}"
+      chain_dest: "{{ intermediate_cert_path }}"
+      csr: "{{ csr_path }}"
+      data: "{{ kdevops_com_challenge }}"
+      dest: "{{ cert_path }}"
+      fullchain_dest: "{{ fullchain_cert_path }}"
+      remaining_days: 90
